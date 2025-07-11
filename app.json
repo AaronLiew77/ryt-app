@@ -9,7 +9,12 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan QR codes for login.",
+        "NSFaceIDUsageDescription": "This app uses Face ID for secure authentication to protect your banking information."
+      },
+      "bundleIdentifier": "com.anonymous.ryt-app"
     },
     "android": {
       "adaptiveIcon": {
