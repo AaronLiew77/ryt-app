@@ -1,12 +1,5 @@
+import { BiometricAuthResult, BiometricType } from "@/interfaces";
 import * as LocalAuthentication from "expo-local-authentication";
-
-export type BiometricType = "fingerprint" | "face" | "iris" | "none";
-
-export interface BiometricAuthResult {
-  success: boolean;
-  error?: string;
-  biometricType?: BiometricType;
-}
 
 class BiometricAuthService {
   async isDeviceSupported(): Promise<boolean> {

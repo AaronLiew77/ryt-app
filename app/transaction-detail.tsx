@@ -1,18 +1,9 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { Transaction } from "@/interfaces";
 import { router, useLocalSearchParams } from "expo-router";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-interface Transaction {
-  id: string;
-  title: string;
-  subtitle: string;
-  amount: number;
-  date: string;
-  type: "debit" | "credit";
-  category?: string;
-}
 
 export default function TransactionDetailScreen() {
   const params = useLocalSearchParams();
@@ -31,7 +22,7 @@ export default function TransactionDetailScreen() {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "MYR",
     }).format(Math.abs(amount));
   };
 
@@ -56,7 +47,7 @@ export default function TransactionDetailScreen() {
   };
 
   const getStatusColor = () => {
-    return transaction.type === "credit" ? "text-green-600" : "text-red-600";
+    return transaction.type === "credit" ? "#059669" : "#dc2626"; // green-600 : red-600
   };
 
   const getStatusText = () => {
@@ -68,10 +59,17 @@ export default function TransactionDetailScreen() {
       {/* Header */}
       <ThemedView className='flex-row items-center justify-between px-6 py-4 bg-white border-b border-gray-200'>
         <TouchableOpacity onPress={() => router.back()} className='mr-4'>
-          <ThemedText className='text-blue-600 text-lg'>← Back</ThemedText>
+          <ThemedText className='text-blue-600'>←</ThemedText>
         </TouchableOpacity>
 
-        <ThemedText type='title' className='text-gray-900 flex-1 text-center'>
+        <ThemedText
+          type='title'
+          className='text-gray-900 flex-1 text-center'
+          adjustsFontSizeToFit={true}
+          style={{ fontSize: 18 }}
+          minimumFontScale={0.8}
+          numberOfLines={1}
+        >
           Transaction Details
         </ThemedText>
 
@@ -81,11 +79,11 @@ export default function TransactionDetailScreen() {
       <ScrollView className='flex-1' showsVerticalScrollIndicator={false}>
         {/* Transaction Amount */}
         <ThemedView className='bg-white mx-6 mt-6 rounded-xl shadow-sm border border-gray-100 p-6 items-center'>
-          <ThemedText className={`text-4xl font-bold ${getStatusColor()}`}>
+          <ThemedText className='text-4xl font-bold' style={{ color: getStatusColor() }}>
             {transaction.type === "credit" ? "+" : "-"}
             {formatCurrency(transaction.amount)}
           </ThemedText>
-          <ThemedText className={`text-lg font-medium mt-2 ${getStatusColor()}`}>
+          <ThemedText className='text-lg font-medium mt-2' style={{ color: getStatusColor() }}>
             {getStatusText()}
           </ThemedText>
         </ThemedView>

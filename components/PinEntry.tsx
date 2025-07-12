@@ -1,17 +1,8 @@
+import { PinEntryProps } from "@/interfaces";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, Vibration, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
-
-interface PinEntryProps {
-  mode: "setup" | "verify";
-  onPinComplete: (pin: string) => void;
-  onCancel?: () => void;
-  maxLength?: number;
-  title?: string;
-  subtitle?: string;
-  errorMessage?: string;
-}
 
 export function PinEntry({
   mode,

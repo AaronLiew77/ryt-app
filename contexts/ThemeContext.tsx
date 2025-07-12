@@ -1,24 +1,11 @@
 import { useColorScheme as useSystemColorScheme } from "@/hooks/useColorScheme";
+import { ResolvedTheme, ThemeContextType, ThemePreference, ThemeProviderProps } from "@/interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-
-type ThemePreference = "light" | "dark" | "system";
-type ResolvedTheme = "light" | "dark";
-
-interface ThemeContextType {
-  themePreference: ThemePreference;
-  resolvedTheme: ResolvedTheme;
-  isLoading: boolean;
-  setThemePreference: (theme: ThemePreference) => Promise<void>;
-}
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_KEY = "@ryt_app_theme";
-
-interface ThemeProviderProps {
-  children: ReactNode;
-}
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [themePreference, setThemePreferenceState] = useState<ThemePreference>("system");

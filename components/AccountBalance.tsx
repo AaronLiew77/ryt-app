@@ -1,3 +1,4 @@
+import { AccountBalanceProps } from "@/interfaces";
 import { biometricAuthService } from "@/services/biometricAuth";
 import CryptoService from "@/utils/cryptoService";
 import { LinearGradient } from "expo-linear-gradient";
@@ -13,13 +14,6 @@ import {
 } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { IconSymbol } from "./ui/IconSymbol";
-
-interface AccountBalanceProps {
-  balance: number;
-  accountNumber: string;
-  accountType?: string;
-  onViewDetails?: () => void;
-}
 
 export function AccountBalance({
   balance,
@@ -69,7 +63,7 @@ export function AccountBalance({
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "MYR",
     }).format(amount);
   };
 
@@ -221,6 +215,9 @@ export function AccountBalance({
               className='text-white text-sm opacity-90 font-medium'
               lightColor='#fff'
               darkColor='#fff'
+              numberOfLines={1}
+              adjustsFontSizeToFit={true}
+              minimumFontScale={0.7}
             >
               {accountType} Account
             </ThemedText>
@@ -229,26 +226,18 @@ export function AccountBalance({
                 className='text-white text-xs opacity-75 font-mono'
                 lightColor='#fff'
                 darkColor='#fff'
+                numberOfLines={1}
+                adjustsFontSizeToFit={true}
+                minimumFontScale={0.7}
               >
                 {formatAccountNumber(accountNumber)}
               </ThemedText>
               <Pressable
                 onPress={handleCopyAccountNumber}
-                accessibilityLabel='Copy account number'
-                className='ml-2 px-2 py-1 rounded bg-white/10 flex-row items-center'
+                accessibilityLabel={copied ? "Copied!" : "Copy account number"}
+                className='ml-2 p-1 rounded bg-white/10'
               >
-                <IconSymbol
-                  name='chevron.left.forwardslash.chevron.right'
-                  size={16}
-                  color='#F6F6F6'
-                />
-                <ThemedText
-                  className='text-white text-xs ml-1'
-                  lightColor='#F6F6F6'
-                  darkColor='#F6F6F6'
-                >
-                  {copied ? "Copied!" : "Copy"}
-                </ThemedText>
+                <IconSymbol name='doc.on.doc' size={16} color={copied ? "#34D399" : "#F6F6F6"} />
               </Pressable>
             </View>
           </View>

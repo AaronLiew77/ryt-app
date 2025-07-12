@@ -1,122 +1,76 @@
-import { TouchableOpacity, View } from "react-native";
+import { useTheme } from "@/contexts/ThemeContext";
+import transactionData from "@/data/transactions.json";
+import { RecentTransactionsProps, Transaction } from "@/interfaces";
+import { Platform, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
-
-interface Transaction {
-  id: string;
-  title: string;
-  subtitle: string;
-  amount: number;
-  date: string;
-  type: "debit" | "credit";
-  category?: string;
-}
-
-interface RecentTransactionsProps {
-  transactions?: Transaction[];
-  onViewAll?: () => void;
-  onTransactionPress?: (transaction: Transaction) => void;
-}
-
-const sampleTransactions: Transaction[] = [
-  {
-    id: "1",
-    title: "Starbucks Coffee",
-    subtitle: "Coffee & Tea",
-    amount: -5.47,
-    date: "Today",
-    type: "debit",
-    category: "Food & Dining",
-  },
-  {
-    id: "2",
-    title: "Salary Deposit",
-    subtitle: "Direct Deposit",
-    amount: 3250.0,
-    date: "Yesterday",
-    type: "credit",
-    category: "Income",
-  },
-  {
-    id: "3",
-    title: "Amazon Purchase",
-    subtitle: "Online Shopping",
-    amount: -89.99,
-    date: "Dec 15",
-    type: "debit",
-    category: "Shopping",
-  },
-  {
-    id: "4",
-    title: "Gas Station",
-    subtitle: "Shell #1234",
-    amount: -45.2,
-    date: "Dec 14",
-    type: "debit",
-    category: "Transportation",
-  },
-];
+import { TransactionItem } from "./TransactionItem";
 
 export function RecentTransactions({
-  transactions = sampleTransactions,
+  transactions = transactionData as Transaction[],
   onViewAll,
   onTransactionPress,
 }: RecentTransactionsProps) {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(Math.abs(amount));
-  };
-
+  const { resolvedTheme } = useTheme();
   // Limit to first 10 transactions for the home page
   const displayTransactions = transactions.slice(0, 10);
 
+  const containerStyle = {
+    borderRadius: 16,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: resolvedTheme === "dark" ? 0.3 : 0.1,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+    // Add a subtle border that works for both themes
+    borderWidth: 1,
+    borderColor: resolvedTheme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.05)",
+  };
+
   return (
-    <View className='my-4'>
-      <View className='flex-row justify-between items-center mb-4'>
-        <ThemedText type='subtitle' className='text-gray-900'>
-          Recent Transactions
-        </ThemedText>
-        <TouchableOpacity onPress={onViewAll}>
-          <ThemedText className='text-blue-600 font-medium'>View All</ThemedText>
+    <View className='my-6'>
+      <View className='flex-row justify-between items-center mb-6'>
+        <View className='flex-1 mr-3'>
+          <ThemedText
+            type='subtitle'
+            className='font-semibold'
+            adjustsFontSizeToFit={true}
+            numberOfLines={1}
+          >
+            Recent Transactions
+          </ThemedText>
+        </View>
+        <TouchableOpacity onPress={onViewAll} className='flex-shrink-0'>
+          <ThemedText
+            className='text-blue-600 font-medium text-sm'
+            lightColor='#2563EB'
+            darkColor='#60A5FA'
+            adjustsFontSizeToFit={true}
+            numberOfLines={1}
+            minimumFontScale={0.8}
+          >
+            View All
+          </ThemedText>
         </TouchableOpacity>
       </View>
 
-      <ThemedView className='bg-white rounded-xl shadow-sm border border-gray-100'>
+      <ThemedView style={containerStyle}>
         {displayTransactions.map((transaction, index) => (
-          <TouchableOpacity
+          <TransactionItem
             key={transaction.id}
-            onPress={() => onTransactionPress?.(transaction)}
-            className={`p-4 ${index !== displayTransactions.length - 1 ? "border-b border-gray-100" : ""}`}
-          >
-            <View className='flex-row justify-between items-center'>
-              <View className='flex-1'>
-                <ThemedText className='text-gray-900 font-medium text-base'>
-                  {transaction.title}
-                </ThemedText>
-                <ThemedText className='text-gray-500 text-sm mt-1'>
-                  {transaction.subtitle} • {transaction.date}
-                </ThemedText>
-              </View>
-
-              <View className='items-end'>
-                <ThemedText
-                  className={`font-semibold text-base ${
-                    transaction.type === "credit" ? "text-green-600" : "text-gray-900"
-                  }`}
-                >
-                  {transaction.type === "credit" ? "+" : "-"}
-                  {formatCurrency(transaction.amount)}
-                </ThemedText>
-                {transaction.category && (
-                  <ThemedText className='text-gray-400 text-xs mt-1'>
-                    {transaction.category}
-                  </ThemedText>
-                )}
-              </View>
-            </View>
-          </TouchableOpacity>
+            transaction={transaction}
+            onPress={onTransactionPress}
+            showBorder={index !== displayTransactions.length - 1}
+          />
         ))}
       </ThemedView>
     </View>

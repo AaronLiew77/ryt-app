@@ -3,7 +3,7 @@ import bankingData from "@/data/banking.json";
 import transactionData from "@/data/transactions.json";
 import SecureStorageService, { BankingData, Transaction } from "@/services/secureStorageService";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "../global.css";
 
@@ -11,6 +11,7 @@ export default function HomeTab() {
   const [bankingDataState, setBankingDataState] = useState<BankingData | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     loadBankingData();
@@ -48,9 +49,9 @@ export default function HomeTab() {
       // Log storage type for debugging
       const CryptoService = (await import("@/utils/cryptoService")).default;
       const storageType = await CryptoService.getStorageType();
-      console.log(`🔒 Banking data loaded using: ${storageType}`);
-      console.log(`🔒 Transaction data loaded: ${encryptedTransactions?.length || 0} transactions`);
-      console.log(`🔒 Banking data: ${data ? "encrypted data loaded" : "using fallback"}`);
+      // console.log(`🔒 Banking data loaded using: ${storageType}`);
+      // console.log(`🔒 Transaction data loaded: ${encryptedTransactions?.length || 0} transactions`);
+      // console.log(`🔒 Banking data: ${data ? "encrypted data loaded" : "using fallback"}`);
     } catch (error) {
       console.error("Error loading banking data:", error);
       // Only use fallback on actual errors, not on null returns
@@ -59,6 +60,12 @@ export default function HomeTab() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadBankingData();
+    setRefreshing(false);
   };
 
   if (isLoading) {
@@ -73,12 +80,24 @@ export default function HomeTab() {
 
   return (
     <SafeAreaView className='flex-1'>
-      <BankingHome
-        userName={bankingDataState?.userName || "User"}
-        accountBalance={bankingDataState?.accountBalance || 0}
-        accountNumber={bankingDataState?.accountNumber || "****"}
-        transactions={transactions}
-      />
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={["#2563eb"]}
+            tintColor='#2563eb'
+          />
+        }
+      >
+        <BankingHome
+          userName={bankingDataState?.userName || "User"}
+          accountBalance={bankingDataState?.accountBalance || 0}
+          accountNumber={bankingDataState?.accountNumber || "****"}
+          transactions={transactions || []}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 }

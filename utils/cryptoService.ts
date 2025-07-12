@@ -1,44 +1,14 @@
+import {
+  BankingData,
+  EncryptedBankingData,
+  EncryptedData,
+  EncryptedTransaction,
+  Transaction,
+} from "@/interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CryptoJS from "crypto-js";
 import * as Crypto from "expo-crypto";
 import * as SecureStore from "expo-secure-store";
-
-interface EncryptedData {
-  encryptedData: string;
-  iv: string;
-}
-
-interface BankingData {
-  userName?: string;
-  accountBalance?: number;
-  accountNumber?: string;
-}
-
-interface EncryptedBankingData {
-  userName?: EncryptedData;
-  accountBalance?: EncryptedData;
-  accountNumber?: EncryptedData;
-}
-
-interface Transaction {
-  id: string;
-  title: string;
-  subtitle: string;
-  amount: number;
-  date: string;
-  type: "debit" | "credit";
-  category: string;
-}
-
-interface EncryptedTransaction {
-  id: string; // Keep ID unencrypted for indexing
-  title: EncryptedData;
-  subtitle: EncryptedData;
-  amount: EncryptedData;
-  date: EncryptedData;
-  type: EncryptedData;
-  category: EncryptedData;
-}
 
 class CryptoService {
   private static readonly ENCRYPTION_KEY = "BANKING_ENCRYPTION_KEY";
@@ -313,7 +283,7 @@ class CryptoService {
         amount: await this.encryptValue(transaction.amount.toString()),
         date: await this.encryptValue(transaction.date),
         type: await this.encryptValue(transaction.type),
-        category: await this.encryptValue(transaction.category),
+        category: await this.encryptValue(transaction.category || ""),
       };
     } catch (error) {
       console.error("Error encrypting transaction:", error);
@@ -379,4 +349,3 @@ class CryptoService {
 }
 
 export default CryptoService;
-export type { BankingData, EncryptedBankingData, EncryptedData, EncryptedTransaction, Transaction };

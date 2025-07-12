@@ -1,11 +1,7 @@
+import { BankingHeaderProps } from "@/interfaces";
 import { TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
-
-interface BankingHeaderProps {
-  userName: string;
-  onProfilePress?: () => void;
-}
 
 export function BankingHeader({ userName, onProfilePress }: BankingHeaderProps) {
   return (

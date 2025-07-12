@@ -1,6 +1,6 @@
 import { useTheme } from "@/contexts/ThemeContext";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
@@ -21,26 +21,38 @@ export function ThemeSelector() {
 
       <RadioButton.Group onValueChange={handleThemeChange} value={themePreference}>
         <View style={styles.radioContainer}>
-          <View style={styles.radioItem}>
+          <TouchableOpacity
+            style={styles.radioItem}
+            onPress={() => handleThemeChange("light")}
+            activeOpacity={0.7}
+          >
             <RadioButton value='light' />
             <ThemedText style={styles.radioLabel}>Light</ThemedText>
-          </View>
+          </TouchableOpacity>
           <ThemedText style={styles.radioDescription}>Always use light theme</ThemedText>
         </View>
 
         <View style={styles.radioContainer}>
-          <View style={styles.radioItem}>
+          <TouchableOpacity
+            style={styles.radioItem}
+            onPress={() => handleThemeChange("dark")}
+            activeOpacity={0.7}
+          >
             <RadioButton value='dark' />
             <ThemedText style={styles.radioLabel}>Dark</ThemedText>
-          </View>
+          </TouchableOpacity>
           <ThemedText style={styles.radioDescription}>Always use dark theme</ThemedText>
         </View>
 
         <View style={styles.radioContainer}>
-          <View style={styles.radioItem}>
+          <TouchableOpacity
+            style={styles.radioItem}
+            onPress={() => handleThemeChange("system")}
+            activeOpacity={0.7}
+          >
             <RadioButton value='system' />
             <ThemedText style={styles.radioLabel}>System</ThemedText>
-          </View>
+          </TouchableOpacity>
           <ThemedText style={styles.radioDescription}>Follow system theme setting</ThemedText>
         </View>
       </RadioButton.Group>

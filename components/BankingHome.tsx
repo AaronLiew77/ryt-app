@@ -1,4 +1,5 @@
-import { router } from "expo-router";
+import { BankingHomeProps } from "@/interfaces";
+import { useRouter } from "expo-router";
 import { Alert, ScrollView } from "react-native";
 import { useAuth } from "../contexts/AuthContext";
 import { AccountBalance } from "./AccountBalance";
@@ -7,23 +8,6 @@ import { QuickActions } from "./QuickActions";
 import { RecentTransactions } from "./RecentTransactions";
 import { ThemedView } from "./ThemedView";
 
-interface Transaction {
-  id: string;
-  title: string;
-  subtitle: string;
-  amount: number;
-  date: string;
-  type: "debit" | "credit";
-  category?: string;
-}
-
-interface BankingHomeProps {
-  userName: string;
-  accountBalance: number;
-  accountNumber: string;
-  transactions?: Transaction[];
-}
-
 export function BankingHome({
   userName,
   accountBalance,
@@ -31,10 +15,11 @@ export function BankingHome({
   transactions,
 }: BankingHomeProps) {
   const { logout } = useAuth();
+  const router = useRouter();
 
   const handleProfilePress = () => {
     Alert.alert("Account Options", "What would you like to do?", [
-      { text: "Settings", onPress: () => console.log("Settings") },
+      { text: "Settings", onPress: () => router.push("/explore") },
       { text: "Logout", onPress: handleLogout, style: "destructive" },
       { text: "Cancel", style: "cancel" },
     ]);

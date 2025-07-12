@@ -1,4 +1,5 @@
-import CryptoService, { BankingData } from "./cryptoService";
+import { BankingData } from "@/interfaces";
+import CryptoService from "./cryptoService";
 
 /**
  * Test utility to demonstrate AES encryption working properly

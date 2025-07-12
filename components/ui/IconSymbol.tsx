@@ -15,16 +15,23 @@ type IconSymbolName = keyof typeof MAPPING;
  */
 const MAPPING = {
   "house.fill": "home",
-  "paperplane.fill": "send",
+  "paperplane.fill": "settings",
   "chevron.left.forwardslash.chevron.right": "code",
   "chevron.right": "chevron-right",
-  "list.bullet": "format-list-bulleted",
+  "list.bullet": "receipt-long",
   "arrow.left.arrow.right": "swap-horiz",
   qrcode: "qr-code",
   "arrow.down.circle": "arrow-downward",
   creditcard: "credit-card",
   "plus.circle": "add-circle",
   "chart.bar": "bar-chart",
+  eye: "visibility",
+  "eye.slash": "visibility-off",
+  "doc.on.doc": "content-copy",
+  gear: "settings",
+  "person.circle": "account-circle",
+  banknote: "payment",
+  "building.columns": "account-balance",
 } as IconMapping;
 
 /**
@@ -37,6 +44,7 @@ export function IconSymbol({
   size = 24,
   color,
   style,
+  weight = "regular",
 }: {
   name: IconSymbolName;
   size?: number;

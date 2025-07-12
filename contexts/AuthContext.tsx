@@ -1,25 +1,12 @@
+import { AuthContextType, AuthProviderProps } from "@/interfaces";
 import SecureStorageService from "@/services/secureStorageService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-
-interface AuthContextType {
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  login: () => void;
-  logout: () => void;
-  hasPin: boolean;
-  setPin: (pin: string) => Promise<void>;
-  verifyPin: (pin: string) => Promise<boolean>;
-}
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AUTH_KEY = "@ryt_app_auth";
 const PIN_KEY = "@ryt_app_pin";
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

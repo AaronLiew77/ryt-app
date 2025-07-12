@@ -1,13 +1,12 @@
+import { AuthMode, BiometricType } from "@/interfaces";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { useAuth } from "../contexts/AuthContext";
-import { biometricAuthService, BiometricType } from "../services/biometricAuth";
+import { biometricAuthService } from "../services/biometricAuth";
 import { PinEntry } from "./PinEntry";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
-
-type AuthMode = "biometric" | "pin-setup" | "pin-verify";
 
 export function LoginScreen() {
   const [authMode, setAuthMode] = useState<AuthMode>("biometric");
@@ -194,13 +193,6 @@ export function LoginScreen() {
             <>
               <TouchableOpacity
                 onPress={handleBiometricAuth}
-                className='w-24 h-24 bg-blue-100 rounded-full items-center justify-center mb-6'
-              >
-                <ThemedText className='text-4xl'>{getBiometricIcon()}</ThemedText>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={handleBiometricAuth}
                 className='bg-blue-600 px-8 py-4 rounded-xl mb-4'
               >
                 <ThemedText className='text-white font-semibold text-lg text-center'>
@@ -233,7 +225,9 @@ export function LoginScreen() {
           )}
 
           {error ? (
-            <ThemedText className='text-red-500 text-center mt-4 text-sm'>{error}</ThemedText>
+            <ThemedText className='text-red-500 text-center mt-4 text-sm hidden'>
+              {error}
+            </ThemedText>
           ) : null}
         </View>
       )}

@@ -1,23 +1,7 @@
 import defaultBankingData from "@/data/banking.json";
+import { BankingData, StoredBankingData, StoredTransactionData, Transaction } from "@/interfaces";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CryptoService, {
-  BankingData,
-  EncryptedBankingData,
-  EncryptedTransaction,
-  Transaction,
-} from "../utils/cryptoService";
-
-interface StoredBankingData {
-  encrypted: EncryptedBankingData;
-  timestamp: number;
-  version: string;
-}
-
-interface StoredTransactionData {
-  encrypted: EncryptedTransaction[];
-  timestamp: number;
-  version: string;
-}
+import CryptoService from "../utils/cryptoService";
 
 class SecureStorageService {
   private static readonly BANKING_DATA_KEY = "SECURE_BANKING_DATA";
@@ -366,4 +350,4 @@ class SecureStorageService {
 }
 
 export default SecureStorageService;
-export type { BankingData, Transaction };
+// Types are now centralized in @/interfaces
