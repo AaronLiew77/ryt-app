@@ -9,9 +9,9 @@ interface BankingHeaderProps {
 
 export function BankingHeader({ userName, onProfilePress }: BankingHeaderProps) {
   return (
-    <ThemedView className='flex-row justify-between items-center px-6 py-4 pt-12'>
+    <ThemedView className='flex-row justify-between items-center py-4 pt-12'>
       <View>
-        <ThemedText type='subtitle' className='text-gray-600'>
+        <ThemedText type='subtitle' className='text-gray-600 mb-2'>
           Good morning,
         </ThemedText>
         <ThemedText type='title' className='text-gray-900'>

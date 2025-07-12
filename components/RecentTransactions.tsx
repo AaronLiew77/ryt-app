@@ -69,8 +69,11 @@ export function RecentTransactions({
     }).format(Math.abs(amount));
   };
 
+  // Limit to first 10 transactions for the home page
+  const displayTransactions = transactions.slice(0, 10);
+
   return (
-    <View className='px-6 my-4'>
+    <View className='my-4'>
       <View className='flex-row justify-between items-center mb-4'>
         <ThemedText type='subtitle' className='text-gray-900'>
           Recent Transactions
@@ -81,11 +84,11 @@ export function RecentTransactions({
       </View>
 
       <ThemedView className='bg-white rounded-xl shadow-sm border border-gray-100'>
-        {transactions.map((transaction, index) => (
+        {displayTransactions.map((transaction, index) => (
           <TouchableOpacity
             key={transaction.id}
             onPress={() => onTransactionPress?.(transaction)}
-            className={`p-4 ${index !== transactions.length - 1 ? "border-b border-gray-100" : ""}`}
+            className={`p-4 ${index !== displayTransactions.length - 1 ? "border-b border-gray-100" : ""}`}
           >
             <View className='flex-row justify-between items-center'>
               <View className='flex-1'>

@@ -1,0 +1,227 @@
+[
+  {
+    "id": "1",
+    "title": "Starbucks Coffee",
+    "subtitle": "Coffee & Tea - 5th Ave",
+    "amount": -5.47,
+    "date": "Today",
+    "type": "debit",
+    "category": "Food & Dining"
+  },
+  {
+    "id": "2",
+    "title": "Salary Deposit",
+    "subtitle": "Direct Deposit - ABC Corp",
+    "amount": 3250.0,
+    "date": "Dec 16",
+    "type": "credit",
+    "category": "Income"
+  },
+  {
+    "id": "3",
+    "title": "Amazon Purchase",
+    "subtitle": "Online Shopping",
+    "amount": -89.99,
+    "date": "Dec 15",
+    "type": "debit",
+    "category": "Shopping"
+  },
+  {
+    "id": "4",
+    "title": "Shell Gas Station",
+    "subtitle": "Fuel Purchase #1234",
+    "amount": -45.2,
+    "date": "Dec 14",
+    "type": "debit",
+    "category": "Transportation"
+  },
+  {
+    "id": "5",
+    "title": "Netflix Subscription",
+    "subtitle": "Monthly Subscription",
+    "amount": -15.99,
+    "date": "Dec 13",
+    "type": "debit",
+    "category": "Entertainment"
+  },
+  {
+    "id": "6",
+    "title": "Grocery Store",
+    "subtitle": "Whole Foods Market",
+    "amount": -127.84,
+    "date": "Dec 12",
+    "type": "debit",
+    "category": "Groceries"
+  },
+  {
+    "id": "7",
+    "title": "ATM Withdrawal",
+    "subtitle": "Cash Withdrawal",
+    "amount": -100.0,
+    "date": "Dec 11",
+    "type": "debit",
+    "category": "Cash"
+  },
+  {
+    "id": "8",
+    "title": "Freelance Payment",
+    "subtitle": "Project Payment - Client XYZ",
+    "amount": 750.0,
+    "date": "Dec 10",
+    "type": "credit",
+    "category": "Income"
+  },
+  {
+    "id": "9",
+    "title": "Uber Ride",
+    "subtitle": "Trip from Home to Airport",
+    "amount": -28.5,
+    "date": "Dec 9",
+    "type": "debit",
+    "category": "Transportation"
+  },
+  {
+    "id": "10",
+    "title": "Electric Bill",
+    "subtitle": "Monthly Utility Payment",
+    "amount": -112.45,
+    "date": "Dec 8",
+    "type": "debit",
+    "category": "Utilities"
+  },
+  {
+    "id": "11",
+    "title": "Restaurant Dinner",
+    "subtitle": "The Italian Place",
+    "amount": -78.92,
+    "date": "Dec 7",
+    "type": "debit",
+    "category": "Food & Dining"
+  },
+  {
+    "id": "12",
+    "title": "Bank Interest",
+    "subtitle": "Monthly Interest Payment",
+    "amount": 12.34,
+    "date": "Dec 6",
+    "type": "credit",
+    "category": "Interest"
+  },
+  {
+    "id": "13",
+    "title": "Target Shopping",
+    "subtitle": "Household Items",
+    "amount": -156.73,
+    "date": "Dec 5",
+    "type": "debit",
+    "category": "Shopping"
+  },
+  {
+    "id": "14",
+    "title": "Gym Membership",
+    "subtitle": "Monthly Fitness Fee",
+    "amount": -29.99,
+    "date": "Dec 4",
+    "type": "debit",
+    "category": "Health & Fitness"
+  },
+  {
+    "id": "15",
+    "title": "Apple Store",
+    "subtitle": "App Store Purchase",
+    "amount": -4.99,
+    "date": "Dec 3",
+    "type": "debit",
+    "category": "Digital Services"
+  },
+  {
+    "id": "16",
+    "title": "Rent Payment",
+    "subtitle": "Monthly Rent",
+    "amount": -1850.0,
+    "date": "Dec 1",
+    "type": "debit",
+    "category": "Housing"
+  },
+  {
+    "id": "17",
+    "title": "Cashback Reward",
+    "subtitle": "Credit Card Rewards",
+    "amount": 25.67,
+    "date": "Nov 30",
+    "type": "credit",
+    "category": "Rewards"
+  },
+  {
+    "id": "18",
+    "title": "Coffee Shop",
+    "subtitle": "Local Café - Morning Coffee",
+    "amount": -6.25,
+    "date": "Nov 29",
+    "type": "debit",
+    "category": "Food & Dining"
+  },
+  {
+    "id": "19",
+    "title": "Gas Station",
+    "subtitle": "BP Station #5678",
+    "amount": -52.8,
+    "date": "Nov 28",
+    "type": "debit",
+    "category": "Transportation"
+  },
+  {
+    "id": "20",
+    "title": "Online Transfer",
+    "subtitle": "Transfer from Savings",
+    "amount": 500.0,
+    "date": "Nov 27",
+    "type": "credit",
+    "category": "Transfer"
+  },
+  {
+    "id": "21",
+    "title": "Insurance Payment",
+    "subtitle": "Auto Insurance Premium",
+    "amount": -195.5,
+    "date": "Nov 26",
+    "type": "debit",
+    "category": "Insurance"
+  },
+  {
+    "id": "22",
+    "title": "Pharmacy",
+    "subtitle": "CVS Prescription",
+    "amount": -23.45,
+    "date": "Nov 25",
+    "type": "debit",
+    "category": "Health & Medical"
+  },
+  {
+    "id": "23",
+    "title": "Book Store",
+    "subtitle": "Barnes & Noble",
+    "amount": -34.99,
+    "date": "Nov 24",
+    "type": "debit",
+    "category": "Education & Books"
+  },
+  {
+    "id": "24",
+    "title": "Investment Dividend",
+    "subtitle": "Quarterly Dividend Payment",
+    "amount": 87.5,
+    "date": "Nov 23",
+    "type": "credit",
+    "category": "Investment"
+  },
+  {
+    "id": "25",
+    "title": "Fast Food",
+    "subtitle": "McDonald's Drive-Thru",
+    "amount": -12.47,
+    "date": "Nov 22",
+    "type": "debit",
+    "category": "Food & Dining"
+  }
+]

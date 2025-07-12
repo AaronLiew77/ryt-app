@@ -1,6 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { ThemeProvider as CustomThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack, useRouter, useSegments } from "expo-router";
@@ -39,13 +39,13 @@ function RootLayoutNav() {
   useEffect(() => {
     if (isLoading) return;
 
-    const inAuthGroup = segments[0] === "(tabs)";
+    const inAuthGroup = segments[0] === "(tabs)" || segments[0] === "transaction-detail";
 
     if (!isAuthenticated && inAuthGroup) {
       // Redirect to login if not authenticated and trying to access protected routes
       router.replace("/login");
-    } else if (isAuthenticated && !inAuthGroup) {
-      // Redirect to main app if authenticated and not in protected routes
+    } else if (isAuthenticated && !inAuthGroup && segments[0] !== "login") {
+      // Redirect to main app if authenticated and not in protected routes (but don't redirect from login)
       router.replace("/(tabs)");
     }
   }, [isAuthenticated, isLoading, segments]);
@@ -54,13 +54,23 @@ function RootLayoutNav() {
     <Stack>
       <Stack.Screen name='login' options={{ headerShown: false }} />
       <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+      <Stack.Screen name='transaction-detail' options={{ headerShown: false }} />
       <Stack.Screen name='+not-found' />
     </Stack>
   );
 }
 
+function ThemedRootLayout() {
+  const { resolvedTheme } = useTheme();
+  return (
+    <ThemeProvider value={resolvedTheme === "dark" ? CustomDarkTheme : CustomLightTheme}>
+      <RootLayoutNav />
+      <StatusBar style='auto' />
+    </ThemeProvider>
+  );
+}
+
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
@@ -72,12 +82,11 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <PaperProvider>
-        <ThemeProvider value={colorScheme === "dark" ? CustomDarkTheme : CustomLightTheme}>
-          <RootLayoutNav />
-          <StatusBar style='auto' />
-        </ThemeProvider>
-      </PaperProvider>
+      <CustomThemeProvider>
+        <PaperProvider>
+          <ThemedRootLayout />
+        </PaperProvider>
+      </CustomThemeProvider>
     </AuthProvider>
   );
 }

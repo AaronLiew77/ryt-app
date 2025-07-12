@@ -1,3 +1,4 @@
+import SecureStorageService from "@/services/secureStorageService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
@@ -54,10 +55,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = async () => {
     try {
+      // Clear authentication state
       await AsyncStorage.removeItem(AUTH_KEY);
+
+      // Perform complete security reset (clear encrypted data and keys)
+      await SecureStorageService.securityReset();
+
       setIsAuthenticated(false);
+      console.log("User logged out with complete security reset");
     } catch (error) {
-      console.log("Error clearing auth state:", error);
+      console.log("Error during logout:", error);
+      // Even if security reset fails, clear auth state
+      setIsAuthenticated(false);
     }
   };
 
