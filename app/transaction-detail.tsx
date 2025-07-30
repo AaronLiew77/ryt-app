@@ -55,9 +55,9 @@ export default function TransactionDetailScreen() {
   };
 
   return (
-    <SafeAreaView className='flex-1 bg-gray-50'>
+    <SafeAreaView className='flex-1'>
       {/* Header */}
-      <ThemedView className='flex-row items-center justify-between px-6 py-4 bg-white border-b border-gray-200'>
+      <ThemedView className='flex-row items-center justify-between px-6 py-4 border-b border-gray-200'>
         <TouchableOpacity onPress={() => router.back()} className='mr-4'>
           <ThemedText className='text-blue-600'>←</ThemedText>
         </TouchableOpacity>
@@ -78,7 +78,7 @@ export default function TransactionDetailScreen() {
 
       <ScrollView className='flex-1' showsVerticalScrollIndicator={false}>
         {/* Transaction Amount */}
-        <ThemedView className='bg-white mx-6 mt-6 rounded-xl shadow-sm border border-gray-100 p-6 items-center'>
+        <ThemedView className='mx-6 mt-6 rounded-xl shadow-sm border border-gray-100 p-6 items-center'>
           <ThemedText className='text-4xl font-bold' style={{ color: getStatusColor() }}>
             {transaction.type === "credit" ? "+" : "-"}
             {formatCurrency(transaction.amount)}
@@ -89,7 +89,7 @@ export default function TransactionDetailScreen() {
         </ThemedView>
 
         {/* Transaction Info */}
-        <ThemedView className='bg-white mx-6 mt-4 rounded-xl shadow-sm border border-gray-100'>
+        <ThemedView className='mx-6 mt-4 rounded-xl shadow-sm border border-gray-100'>
           {/* Merchant/Title */}
           <View className='p-6 border-b border-gray-100'>
             <ThemedText className='text-gray-500 text-sm mb-1'>Merchant</ThemedText>
@@ -118,7 +118,10 @@ export default function TransactionDetailScreen() {
               <ThemedText className='text-gray-500 text-sm mb-1'>Category</ThemedText>
               <View className='flex-row items-center'>
                 <View className='bg-blue-100 px-3 py-1 rounded-full'>
-                  <ThemedText className='text-blue-800 text-sm font-medium'>
+                  <ThemedText
+                    className='text-black text-sm font-medium'
+                    style={{ color: "#000000" }}
+                  >
                     {transaction.category}
                   </ThemedText>
                 </View>
@@ -134,7 +137,7 @@ export default function TransactionDetailScreen() {
         </ThemedView>
 
         {/* Additional Actions */}
-        <ThemedView className='bg-white mx-6 mt-4 rounded-xl shadow-sm border border-gray-100'>
+        <ThemedView className='mx-6 mt-4 rounded-xl shadow-sm border border-gray-100'>
           <TouchableOpacity className='p-4 border-b border-gray-100'>
             <ThemedText className='text-blue-600 text-base font-medium text-center'>
               Report an Issue

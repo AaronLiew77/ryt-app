@@ -1,7 +1,8 @@
 import { BankingHome } from "@/components/BankingHome";
 import bankingData from "@/data/banking.json";
 import transactionData from "@/data/transactions.json";
-import SecureStorageService, { BankingData, Transaction } from "@/services/secureStorageService";
+import { BankingData, Transaction } from "@/interfaces";
+import SecureStorageService from "@/services/secureStorageService";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, RefreshControl, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
