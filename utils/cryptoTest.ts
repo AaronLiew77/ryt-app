@@ -2,15 +2,15 @@ import { BankingData } from "@/interfaces";
 import CryptoService from "./cryptoService";
 
 /**
- * Test utility to demonstrate AES encryption working properly
- * This can be used in development to verify encryption functionality
+ * Test utility to demonstrate AES-256-CBC + HMAC-SHA256 encryption working properly
+ * This can be used in development to verify encryption functionality and integrity protection
  */
 export class CryptoTest {
   /**
-   * Test basic string encryption/decryption
+   * Test basic string encryption/decryption with HMAC
    */
   static async testStringEncryption() {
-    console.log("🔒 Testing AES String Encryption...");
+    console.log("🔒 Testing AES-256-CBC + HMAC-SHA256 String Encryption...");
 
     const testString = "Sarah Johnson";
 
@@ -21,6 +21,7 @@ export class CryptoTest {
         original: testString,
         encrypted: encrypted.encryptedData.substring(0, 20) + "...",
         iv: encrypted.iv,
+        hmac: encrypted.hmac.substring(0, 16) + "...",
       });
 
       // Decrypt the string
@@ -79,6 +80,69 @@ export class CryptoTest {
   }
 
   /**
+   * Test HMAC integrity protection
+   */
+  static async testHMACIntegrity() {
+    console.log("🛡️  Testing HMAC Integrity Protection...");
+
+    const testString = "Sensitive banking data";
+
+    try {
+      // Encrypt the string
+      const encrypted = await CryptoService.encryptString(testString);
+      console.log("✅ Original encrypted data valid");
+
+      // Test 1: Try to decrypt with tampered ciphertext
+      const tamperedData1 = {
+        ...encrypted,
+        encryptedData: encrypted.encryptedData.slice(0, -1) + "X", // Change last character
+      };
+
+      try {
+        await CryptoService.decryptString(tamperedData1);
+        console.error("❌ SECURITY ISSUE: Tampered ciphertext was accepted!");
+        return false;
+      } catch (error) {
+        console.log("✅ Tampered ciphertext rejected:", error.message);
+      }
+
+      // Test 2: Try to decrypt with tampered IV
+      const tamperedData2 = {
+        ...encrypted,
+        iv: encrypted.iv.slice(0, -1) + "X", // Change last character of IV
+      };
+
+      try {
+        await CryptoService.decryptString(tamperedData2);
+        console.error("❌ SECURITY ISSUE: Tampered IV was accepted!");
+        return false;
+      } catch (error) {
+        console.log("✅ Tampered IV rejected:", error.message);
+      }
+
+      // Test 3: Try to decrypt with tampered HMAC
+      const tamperedData3 = {
+        ...encrypted,
+        hmac: encrypted.hmac.slice(0, -1) + "X", // Change last character of HMAC
+      };
+
+      try {
+        await CryptoService.decryptString(tamperedData3);
+        console.error("❌ SECURITY ISSUE: Tampered HMAC was accepted!");
+        return false;
+      } catch (error) {
+        console.log("✅ Tampered HMAC rejected:", error.message);
+      }
+
+      console.log("✅ HMAC Integrity Protection: PASS");
+      return true;
+    } catch (error) {
+      console.error("❌ HMAC integrity test failed:", error);
+      return false;
+    }
+  }
+
+  /**
    * Test account number formatting
    */
   static testAccountNumberFormatting() {
@@ -98,11 +162,12 @@ export class CryptoTest {
    * Run all tests
    */
   static async runAllTests() {
-    console.log("🧪 Running AES Encryption Tests...\n");
+    console.log("🧪 Running AES-256-CBC + HMAC-SHA256 Encryption Tests...\n");
 
     const tests = [
       await this.testStringEncryption(),
       await this.testBankingDataEncryption(),
+      await this.testHMACIntegrity(),
       this.testAccountNumberFormatting(),
     ];
 
@@ -111,7 +176,8 @@ export class CryptoTest {
     console.log("\n📊 Test Results:");
     console.log(`✅ String Encryption: ${tests[0] ? "PASS" : "FAIL"}`);
     console.log(`✅ Banking Data Encryption: ${tests[1] ? "PASS" : "FAIL"}`);
-    console.log(`✅ Account Formatting: ${tests[2] ? "PASS" : "FAIL"}`);
+    console.log(`🛡️  HMAC Integrity Protection: ${tests[2] ? "PASS" : "FAIL"}`);
+    console.log(`✅ Account Formatting: ${tests[3] ? "PASS" : "FAIL"}`);
     console.log(`\n🎯 Overall: ${allPassed ? "ALL TESTS PASSED" : "SOME TESTS FAILED"}`);
 
     return allPassed;

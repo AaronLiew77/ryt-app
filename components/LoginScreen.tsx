@@ -117,19 +117,6 @@ export function LoginScreen() {
     }
   };
 
-  const getBiometricIcon = () => {
-    switch (biometricType) {
-      case "fingerprint":
-        return "👆";
-      case "face":
-        return "😊";
-      case "iris":
-        return "👁️";
-      default:
-        return "🔐";
-    }
-  };
-
   const getBiometricText = () => {
     switch (biometricType) {
       case "fingerprint":

@@ -21,4 +21,5 @@ export interface EncryptedTransaction {
 export interface EncryptedData {
   encryptedData: string;
   iv: string;
+  hmac: string;
 }
